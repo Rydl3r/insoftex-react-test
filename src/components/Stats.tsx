@@ -1,4 +1,4 @@
-import { Daily, Weather } from "../utils/types";
+import { Weather, List } from "../utils/types";
 
 //this is the component for displaying the best days to buy stuff
 interface Props {
@@ -7,8 +7,10 @@ interface Props {
 
 interface BestDay {
   pop?: number;
+  main?: {
+    temp: number;
+  };
   day: string;
-  temp?: { min: number };
 }
 
 const stats = ({ weather }: Props): JSX.Element => {
@@ -22,8 +24,8 @@ const stats = ({ weather }: Props): JSX.Element => {
     "Saturday",
   ];
   const today: number = new Date().getDay();
-  //openweather returns 8 days, we only need 5
-  const days: Daily[] = weather?.daily?.slice(0, 5);
+  //openweather returns 40 days, we only need 5
+  const days: List[] = weather?.list?.slice(0, 5);
 
   //selecting the day that has the biggest pop (chance of rain) and returning it
   const bestDayToSellUmbrella: BestDay = days?.reduce(
@@ -40,13 +42,16 @@ const stats = ({ weather }: Props): JSX.Element => {
   //selecting the day that has the lowest temp and returning it
   const bestDayToBuyJacket: BestDay = days?.reduce(
     (acc, day, idx) => {
-      if (day.temp.min < acc.temp.min) {
+      if (day.main.temp < acc.main.temp) {
         //we also hardcode the day name into the object, so that then we can use it in the component
-        return { temp: day.temp, day: weekDays[(today + idx) % 7] };
+        return {
+          main: { temp: day.main.temp },
+          day: weekDays[(today + idx) % 7],
+        };
       }
       return acc;
     },
-    { temp: { min: 1000 }, day: "" }
+    { main: { temp: 100 }, day: "" }
   );
 
   return (

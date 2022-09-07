@@ -30,16 +30,13 @@ function App(): JSX.Element {
     }
     setWeather(null);
     const weatherResponse = await fetch(
-      `https://api.openweathermap.org/data/2.5/onecall?lat=${coords[0].lat}&lon=${coords[0].lon}&exclude=minutely,hourly,alerts&units=metric&appid=2c8d06cad01c164f8d7f408a52dec281`
+      `https://api.openweathermap.org/data/2.5/forecast?units=metric&lat=${coords[0].lat}&lon=${coords[0].lon}&appid=2c8d06cad01c164f8d7f408a52dec281`
     );
     if (!weatherResponse.ok) {
       alert("Something went wrong. Please try again later.");
       return;
     }
     const weatherData: Weather = await weatherResponse.json();
-    // openweatherapi does not return the city so we hardcode it into the weather object,
-    // so then we can use it in the WeatherSide component to display city that user searched for
-    weatherData.city = city;
     setWeather(weatherData);
     setCity("");
   };
@@ -51,7 +48,7 @@ function App(): JSX.Element {
 
   return (
     <div className="App">
-      {!weather || !weather?.current ? (
+      {!weather || !weather?.list?.length ? (
         //if there is no weather data yet, show loader
         <Loader />
       ) : (

@@ -11,12 +11,12 @@ const WeekInfo = ({ weather }: Props): JSX.Element => {
 
   return (
     <ul className="week_list">
-      {weather?.daily?.slice(1, 5).map((day, idx) => {
+      {weather?.list.slice(1, 5).map((day, idx) => {
         //we only need the next 4 days, not including today, so we slice the array from index 1
         return (
           <li className="day" key={idx}>
             <div className="day_name">{weekDays[(today + idx + 1) % 7]}</div>
-            <div className="day_temp">{day?.temp?.day + "°"}</div>
+            <div className="day_temp">{day?.main?.temp + "°"}</div>
           </li>
         );
       })}

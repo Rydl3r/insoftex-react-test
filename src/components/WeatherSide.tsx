@@ -13,14 +13,14 @@ const WeatherSide = ({ weather }: Props): JSX.Element => {
   });
   //imgLink for the weather icon
   const imgLink: string = `http://openweathermap.org/img/wn/${
-    weather && weather.current ? weather.current.weather[0].icon : ""
+    weather && weather?.list?.length ? weather.list[0].weather[0].icon : ""
   }.png`;
 
   return (
     <div className="weather_side">
       <div className="weather_gradient"></div>
       <div className="date_container">
-        <h2 className="date_location">{weather?.city}</h2>
+        <h2 className="date_location">{weather?.city?.name}</h2>
         <h3 className="date_dayname">{weekday}</h3>
         <h5 className="date_day">{todayDate}</h5>
       </div>
@@ -28,9 +28,9 @@ const WeatherSide = ({ weather }: Props): JSX.Element => {
         <img
           className="weather_image"
           src={imgLink}
-          alt={weather?.current?.temp + "°"}
+          alt={weather?.list[0]?.main?.temp + "°"}
         />
-        <h1 className="weather_temp">{weather?.current?.temp + "°"}</h1>
+        <h1 className="weather_temp">{weather?.list[0]?.main?.temp + "°"}</h1>
       </div>
     </div>
   );

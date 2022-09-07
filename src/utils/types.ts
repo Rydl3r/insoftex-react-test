@@ -1,68 +1,97 @@
 export interface Weather {
-  lat: number;
-  lon: number;
-  timezone: string;
-  timezone_offset: number;
-  current: Current;
-  daily: Daily[];
-  city: string;
+  cod: string;
+  message: number;
+  cnt: number;
+  list: List[];
+  city: City;
 }
 
-export interface Current {
-  dt: number;
+export interface City {
+  id: number;
+  name: string;
+  coord: Coord;
+  country: string;
+  population: number;
+  timezone: number;
   sunrise: number;
+
   sunset: number;
+}
+
+export interface Coord {
+  lat: number;
+  lon: number;
+}
+
+export interface List {
+  dt: number;
+  main: Main;
+  weather: WeatherElement[];
+  clouds: Clouds;
+  wind: Wind;
+  visibility: number;
+  pop: number;
+  sys: Sys;
+  dt_txt: string;
+  day: string;
+}
+
+export interface Clouds {
+  all: number;
+}
+
+export interface Main {
   temp: number;
   feels_like: number;
+  temp_min: number;
+  temp_max: number;
   pressure: number;
+  sea_level: number;
+  grnd_level: number;
   humidity: number;
-  dew_point: number;
-  uvi: number;
-  clouds: number;
-  visibility: number;
-  wind_speed: number;
-  wind_deg: number;
-  weather: WeatherElement[];
+  temp_kf: number;
+}
+
+export interface Sys {
+  pod: Pod;
+}
+
+export enum Pod {
+  D = "d",
+  N = "n",
 }
 
 export interface WeatherElement {
   id: number;
-  main: string;
-  description: string;
+  main: MainEnum;
+  description: Description;
   icon: string;
 }
 
-export interface Daily {
-  dt: number;
-  sunrise: number;
-  sunset: number;
-  temp: Temp;
-  feels_like: FeelsLike;
-  pressure: number;
-  humidity: number;
-  dew_point: number;
-  wind_speed: number;
-  wind_deg: number;
-  weather: WeatherElement[];
-  clouds: number;
-  pop: number;
-  uvi: number;
+export enum Description {
+  BrokenClouds = "broken clouds",
+  ClearSky = "clear sky",
+  FewClouds = "few clouds",
+  LightRain = "light rain",
+  OvercastClouds = "overcast clouds",
+  ScatteredClouds = "scattered clouds",
 }
 
-export interface FeelsLike {
-  day: number;
-  night: number;
-  eve: number;
-  morn: number;
+export enum MainEnum {
+  Clear = "Clear",
+  Clouds = "Clouds",
+  Rain = "Rain",
 }
 
-export interface Temp {
-  day: number;
-  min: number;
-  max: number;
-  night: number;
-  eve: number;
-  morn: number;
+export interface Wind {
+  speed: number;
+  deg: number;
+}
+
+export interface WeatherData {
+  weather: Weather;
+  loading: boolean;
+  error: boolean;
 }
 
 export interface Coordinates {
