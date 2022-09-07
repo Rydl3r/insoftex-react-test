@@ -13,7 +13,7 @@ function App(): JSX.Element {
   //OpenWeatherMap API  only works with coords, not city names so here we're fetching coords for given city input
   const fetchCoords = async (city: string): Promise<Coordinates[]> => {
     const res = await fetch(
-      `http://api.openweathermap.org/geo/1.0/direct?q=${
+      `https://api.openweathermap.org/geo/1.0/direct?q=${
         city ? city : "London"
       }&appid=2c8d06cad01c164f8d7f408a52dec281`
     );
@@ -30,7 +30,7 @@ function App(): JSX.Element {
     }
     setWeather(null);
     const weatherResponse = await fetch(
-      `http://api.openweathermap.org/data/2.5/onecall?lat=${coords[0].lat}&lon=${coords[0].lon}&exclude=minutely,hourly,alerts&units=metric&appid=2c8d06cad01c164f8d7f408a52dec281`
+      `https://api.openweathermap.org/data/2.5/onecall?lat=${coords[0].lat}&lon=${coords[0].lon}&exclude=minutely,hourly,alerts&units=metric&appid=2c8d06cad01c164f8d7f408a52dec281`
     );
     if (!weatherResponse.ok) {
       alert("Something went wrong. Please try again later.");
